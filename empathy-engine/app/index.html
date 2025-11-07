@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Darvix Empathy Engine</title>
+</head>
+<body style="font-family: Arial; text-align:center; margin-top: 100px;">
+    <h2>Darvix Empathy Engine - Text to Speech</h2>
+
+    <input type="text" id="inputText" placeholder="Type something..." style="width:300px; padding:10px;">
+    <button onclick="sendText()" style="padding:10px;">Generate Speech</button>
+
+    <br><br>
+    <audio id="audioPlayer" controls></audio>
+
+    <script>
+        async function sendText() {
+            const text = document.getElementById("inputText").value;
+            const audioPlayer = document.getElementById("audioPlayer");
+
+            const response = await fetch(`http://127.0.0.1:8001/tts?text=${encodeURIComponent(text)}`, {
+                method: "POST"
+            });
+
+            const blob = await response.blob();
+            audioPlayer.src = URL.createObjectURL(blob);
+        }
+    </script>
+</body>
+</html>
